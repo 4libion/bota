@@ -7,10 +7,10 @@ var session = require('express-session');
 var app = express();
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-              host     : 'localhost',
-              user     : 'root',
-              password : '',
-              database : 'elearning'
+              host     : 'us-cdbr-east-04.cleardb.com',
+              user     : 'b4cd7d6552f2a8',
+              password : '3f933e43',
+              database : 'heroku_3b662f0c2000bbd'
             });
   
 connection.connect();
