@@ -1,0 +1,33 @@
+<%- include('header'); -%>
+<%- include('container'); -%>
+
+<div class="row">
+    <div>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <span>Hello, <%=data[0].name%>!</span>		  
+		  <span class="pull-right"><a href="/home/logout">Logout</a></span>		  
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class=" col-md-9 col-lg-9 "> 
+              Email: <%=data[0].email%>
+              <hr>
+              Name: <%=data[0].name%>
+              <!-- <table class="table table-user-information">
+                <tbody>
+                  <tr>
+                    <td>Email:</td>
+                    <td><%=data[0].name%></td>
+                  </tr>
+                  <tr>
+                    <td>User Name:</td>
+                    <td><%=data[0].name%></td>
+                  </tr>
+                </tbody>
+              </table> -->
+            </div>
+          </div>
+        </div>
+    </div>
+<%- include('footer'); -%>

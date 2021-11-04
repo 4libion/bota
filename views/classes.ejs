@@ -1,0 +1,29 @@
+<%- include('header'); -%>
+<%- include('container'); -%>
+
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    <% for (let i = 0; i < results.length; i++) { %>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id='flush-heading<%= results[i].id %>'>
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= results[i].id %>" aria-expanded="false" aria-controls="flush-collapse<%= results[i].id %>">
+                    <%= results[i].name %>
+                </button>
+            </h2>
+            <div id="flush-collapse<%= results[i].id %>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%= results[i].id %>" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <%= results[i].short_description %>
+                </div>  
+                <form action="/home/class" method="POST">
+                    <input type="hidden" id="classId" name="classId" value="<%= results[i].id %>">
+                    <button type="submit" class="btn btn-outline-primary">More -></button>
+                </form>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<p><a href="/home/profile">View Profile</a></p>
+<% if(status == 'admin') { %>
+    <p><a href="/home/add">Add New Class</a></p>
+<% } %>
+<%- include('footer'); -%>

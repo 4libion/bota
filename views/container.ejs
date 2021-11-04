@@ -1,0 +1,16 @@
+<nav>
+    <h3><a href="/">Elearning</a></h3>
+    <ul>
+        <% if (userId == null) { %>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Register</a></li>
+        <% } %>
+        <% if (userId != null) { %>
+            <% if (status != 'admin') { %>
+                <li><a href="/home/dashboard">Dashboard</a></li>
+            <% } %>
+            <li><a href="/home/classes">Courses</a></li>
+            <li><a href="/home/logout">Logout</a></li>
+        <% } %>
+    </ul>
+</nav>

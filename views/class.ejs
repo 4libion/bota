@@ -1,0 +1,33 @@
+<%- include('header'); -%>
+<%- include('container'); -%>
+
+<% if (message.length > 0) { %>
+    <div class="alert alert-success col-sm-12"><%= message %></div>
+<% } %>
+
+<div style="margin: 10px;" class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+        <h1 class="display-4 fst-italic"><%= result.name %></h1>
+        <p class="lead my-3"><%= result.long_description %></p>
+    </div>
+    <div class="forms">
+        <form class="form-horizontal" action="/home/edit" method="POST">
+            <% if (status == 'admin') { %>
+                <div class="col-sm-12 controls">
+                    <input type="hidden" value="<%= result.id %>" name="classId">
+                    <button type="submit" class="btn btn-primary" value="edit" name="value">Edit</button>
+                </div>
+            <% } %>
+        </form>
+        <form class="form-horizontal" action="/home/edit/success" method="POST">
+            <% if (status == 'admin') { %>
+                <div class="col-sm-12 controls">
+                    <input type="hidden" value="<%= result.id %>" name="classId">
+                    <button type="submit" class="btn btn-danger" value="delete" name="value">Delete</button>
+                </div>
+            <% } %>
+        </form>
+    </div>
+</div>
+
+<%- include('footer'); -%>
