@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
               password : '',
               database : 'elearning'
             });
- 
+  
 connection.connect();
  
 global.db = connection;
