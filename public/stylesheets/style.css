@@ -86,3 +86,7 @@ button {
   display: flex;
   margin-left: 10px;
 }
+
+.dashboard {
+  float: left;
+}

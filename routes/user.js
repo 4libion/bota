@@ -65,7 +65,7 @@ exports.signup = function(req, res){
             }
          });
       } else {
-         message = "Username and password is mandatory field.";
+         message = "Username and password are mandatory fields.";
          res.render('signup.ejs', {
             userId: req.session.userId,
             message: message
@@ -108,13 +108,24 @@ exports.dashboard = function (req, res) {
       });
    }
 
-   var sql = `SELECT * FROM users WHERE id = '${userId}'`;
-   
+   // var sql = `SELECT * FROM users WHERE id = '${userId}'`;
+
+   // SELECT u.userId, u.classId, (SELECT `name` FROM `classes` WHERE `id` = u.classId)
+   // FROM `userclasses` as u 
+   // WHERE u.userId = 1;
+
+   var sql = `SELECT u.id, u.userId, (SELECT id FROM classes WHERE id = u.classId) as classId,
+         (SELECT name FROM classes WHERE id = u.classId) as name,
+         (SELECT short_description FROM classes WHERE id = u.classId) as short_description
+         FROM userclasses as u 
+         WHERE u.userId = ${userId};`;
+
    db.query(sql, function(err, results) {
+      console.log(results);
       res.render('dashboard', {
-         userId: req.session.userId,
-         status: req.session.status,
-         user: req.session.userId
+         results: results,
+         userId: userId,
+         status: req.session.status
       });
    });
 };
@@ -185,7 +196,14 @@ exports.crudSuccess = function (req, res) {
       sql = `INSERT INTO classes (name, short_description, long_description)
       VALUES('${req.body.name}', '${req.body.short_description}', '${req.body.long_description}')`;
       message = 'Successfully added!';
-   } else {
+   } else if (req.body.value == 'userClass') {
+      sql = `INSERT INTO userclasses (userId, classId)
+      VALUES('${req.session.userId}', '${req.body.classId}')`;
+      message = 'Successfully added to your dashboard. Check it out!';
+   }  else if (req.body.value == 'deleteUserClass') {
+      sql = `DELETE FROM userclasses WHERE userId = '${req.body.userId}' AND classId = '${req.body.classId}'`;
+      message = 'Successfully deleted from your dashboard. Check it out!';
+   }  else {
       sql = `DELETE FROM classes WHERE id = '${req.body.classId}'`;
       message = 'Successfully deleted!';
    }

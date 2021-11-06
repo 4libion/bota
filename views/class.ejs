@@ -27,6 +27,14 @@
                 </div>
             <% } %>
         </form>
+        <form class="form-horizontal" action="/home/edit/success" method="POST">
+            <% if (status == null) { %>
+                <div class="col-sm-12 controls">
+                    <input type="hidden" value="<%= result.id %>" name="classId">
+                    <button type="submit" class="btn btn-danger" value="userClass" name="value">Add</button>
+                </div>
+            <% } %>
+        </form>
     </div>
 </div>
 
