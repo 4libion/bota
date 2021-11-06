@@ -3,7 +3,7 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path');
-var session = require('express-session');
+var session = require('cookie-session');
 var app = express();
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -16,7 +16,8 @@ var connection = mysql.createConnection({
 connection.connect();
  
 global.db = connection;
- 
+
+app.set('trust proxy', 1);
 app.set('port', process.env.PORT || 8080);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -24,11 +25,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-              secret: 'keyboard cat',
-              resave: false,
-              saveUninitialized: true,
-              cookie: { maxAge: 60000 }
-            }))
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 60000,
+      secure: true
+    }
+}));
  
 app.get('/', routes.index);
 app.get('/signup', user.signup);
