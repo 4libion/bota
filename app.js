@@ -3,15 +3,17 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path');
-var session = require('cookie-session');
+var session = require('express-session');
 var app = express();
 var mysql = require('mysql');
+var MySQLStore = require('express-mysql-session')(session);
 var connection = mysql.createConnection({
-  host     : 'us-cdbr-east-04.cleardb.com',  // us-cdbr-east-04.cleardb.com
-  user     : 'b4cd7d6552f2a8',  // b4cd7d6552f2a8
-  password : '3f933e43',  // 3f933e43
-  database : 'heroku_3b662f0c2000bbd'  // heroku_3b662f0c2000bbd
+  host     : 'localhost',  // us-cdbr-east-04.cleardb.com
+  user     : 'root',  // b4cd7d6552f2a8
+  password : '',  // 3f933e43
+  database : 'elearning'  // heroku_3b662f0c2000bbd
 });
+var sessionStore = new MySQLStore({}, connection);
   
 connection.connect();
  
@@ -27,11 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 24 * 60 * 60 * 1000,
-      secure: true
-    }
+    saveUninitialized: false,
+    store: sessionStore
 }));
  
 app.get('/', routes.index);
