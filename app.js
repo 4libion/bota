@@ -9,7 +9,7 @@ var mysql = require('mysql');
 var MySQLStore = require('express-mysql-session')(session);
 
 
-var connection = mysql.createConnection({
+var connection = mysql.createPool({
   host: 'us-cdbr-east-04.cleardb.com', // us-cdbr-east-04.cleardb.com
   user: 'b4cd7d6552f2a8', // b4cd7d6552f2a8
   password: '3f933e43', // 3f933e43
@@ -18,10 +18,6 @@ var connection = mysql.createConnection({
 
 
 var sessionStore = new MySQLStore({}, connection);
-
-
-
-connection.connect();
  
 global.db = connection;
 
