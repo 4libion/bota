@@ -12,9 +12,6 @@ exports.login = function(req, res){
             req.session.userId = results[0].id;
             req.session.email = results[0].email;
             console.log("SESSION: " + req.session[0]);
-            // var hour = 3600000
-            // req.session.cookie.expires = new Date(Date.now() + hour)
-            // req.session.cookie.maxAge = 100 * hour
             res.redirect('/home/dashboard');
          }
          else {
