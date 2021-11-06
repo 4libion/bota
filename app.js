@@ -47,6 +47,6 @@ app.post('/home/edit', user.edit);
 app.get('/home/add', user.add);
 app.post('/home/add', user.add);
 app.post('/home/edit/success', user.crudSuccess);
-app.listen(8000);
+app.listen(process.env.PORT || 8000);
 
 module.exports = app;
