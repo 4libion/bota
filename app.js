@@ -7,15 +7,30 @@ var session = require('express-session');
 var app = express();
 var mysql = require('mysql');
 var MySQLStore = require('express-mysql-session')(session);
-var connection = mysql.createConnection({
-  host     : 'us-cdbr-east-04.cleardb.com',  // us-cdbr-east-04.cleardb.com
-  user     : 'b4cd7d6552f2a8',  // b4cd7d6552f2a8
-  password : '3f933e43',  // 3f933e43
-  database : 'heroku_3b662f0c2000bbd'  // heroku_3b662f0c2000bbd
-});
+
 var sessionStore = new MySQLStore({}, connection);
-  
-connection.connect();
+
+function handleConnection() {
+  var connection = mysql.createConnection({
+    host     : 'us-cdbr-east-04.cleardb.com',  // us-cdbr-east-04.cleardb.com
+    user     : 'b4cd7d6552f2a8',  // b4cd7d6552f2a8
+    password : '3f933e43',  // 3f933e43
+    database : 'heroku_3b662f0c2000bbd'  // heroku_3b662f0c2000bbd
+  });
+
+  connection.connect();
+
+  connection.on('error', function(err) {
+    console.log('db error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleConnection();
+    } else {
+      throw err;
+    }
+  });
+}
+
+handleConnection();
  
 global.db = connection;
 
